@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>'&amp;' | Isolate Scope</title>  
+    <style>.button {padding: 8px;border: 2px solid;display: inline-block;cursor: pointer}</style>
+  </head>
+
+  <body>
+    <h3>The &amp; operator allows you to invoke or evaluate an expression on the parent scope of whatever the directive is inside of.</h3>
+
+    <h3>With, this, it is possible to pass data into a scoped method within the template.</h3>
+    
+    <div ng-app="app">
+      <div ng-controller="ShooterCtrl">
+         <div shotgun-messager fire="fireMessage(msg)"></div> <!-- see Generated markup -->
+      </div>
+    </div>
+
+<!-- Generated markup:
+
+    <div shotgun-messager="" fire="fireMessage(msg)" class="ng-isolate-scope">
+      <span>Lock n' Load: </span> 
+      <input type="text" ng-model="value"> 
+      <div class="button" ng-click=" fire({msg:value}); clearValue(); ">... Fire! </div></div>
+    </div> 
+
+-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script>
+      angular.module('app', [])
+
+        .controller("ShooterCtrl", ['$scope', ShooterCtrl])
+        .directive("shotgunMessager", [shotgunMessager]);
+
+
+        function ShooterCtrl($scope) {
+          $scope.fireMessage = function (msg) {
+            alert(msg);
+          };
+        }
+
+        function shotgunMessager () {
+          return {
+            scope: {
+              fire: "&"
+            },
+            template: '<span>Lock n\' Load: </span>' + ' ' +
+              '<input type="text" ng-model="value">' + ' ' +
+              '<div class="button" ng-click=" fire({msg:value}); clearValue(); ">' +
+              '... Fire! </div>',
+            controller: function($scope) {
+              $scope.clearValue = function() {
+                $scope.value = '';
+              };
+            }
+            // ,
+            // link: function (scope, element, attrs){
+            //   console.dir(scope);
+            //   console.log(element);
+            //   console.log(attrs);
+            // }
+          };
+        }
+      
+    </script>
+  </body>
+
+</html>
