@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>'&equals;' | Isolate Scope</title>  
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h3>The &equals; operator takes an object which it can bind to.
+		The binding allows a template's <br> 
+		input that is bound to the controller's $scope object to modify 
+		that object and vice versa.
+    </h3>
+    
+   <div ng-app="app">
+	  <div ng-controller="MainCtrl">
+	    
+	    <label>colour in controller:</label>
+	    <input type="text" ng-model="ctrlColour"> 							<!-- controller -->
+	    <shirt colour="ctrlColour" size="ctrlSize"></shirt>     <!-- directive -->
+	 
+	  </div>
+	</div>
+
+
+    <script src="angular.min.js"></script>
+    <script>
+      angular.module('app', [])
+
+			.controller("MainCtrl", ['$scope', function ($scope) {
+			  $scope.ctrlColour = "";
+			  $scope.ctrlSize = "";
+			}])
+
+			.directive("shirt", [function () {
+			  return {
+			    scope: {
+			      colour: "=",
+			      size: "="
+			    },
+			    template: '<label>colour in directive:</label> ' +
+			    	'<input type="text" ng-model="colour">' +
+			    	'<p> {{ colour }} </p>' +
+			    	'<label>size in directive:</label> ' +
+			    	'<input type="text" ng-model="size">' +
+			    	'<p> {{ size }} </p>',
+			  };
+			}]);
+      
+    </script>
+  </body>
+
+</html>

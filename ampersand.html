@@ -3,13 +3,11 @@
 
   <head>
     <title>'&amp;' | Isolate Scope</title>  
-    <style>.button {padding: 8px;border: 2px solid;display: inline-block;cursor: pointer}</style>
+    <link rel="stylesheet" href="style.css">
   </head>
 
   <body>
-    <h3>The &amp; operator allows you to invoke or evaluate an expression on the parent scope of whatever the directive is inside of.</h3>
-
-    <h3>With, this, it is possible to pass data into a scoped method within the template.</h3>
+    <h3>The &amp; operator allows you to invoke or evaluate an expression on the parent scope of whatever the directive is inside of.<br>This way, its possible to pass data into a scoped method within the template.</h3>
     
     <div ng-app="app">
       <div ng-controller="ShooterCtrl">
@@ -26,7 +24,7 @@
     </div> 
 
 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="angular.min.js"></script>
     <script>
       angular.module('app', [])
 

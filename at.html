@@ -1,1 +1,57 @@
-at.html
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>'@' | Isolate Scope</title>  
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h3>
+    	Th '@' operator extracts an attribute by name, and assigns it to the scope.
+    	<br>
+			Notice that the interpolated value of the colour attribute will evaluate <br>
+			to a value on the scoped object with that name.
+    </h3>
+    
+   <div ng-app="app">
+	  <div ng-controller="MainCtrl">
+	    
+	    <input type="text" ng-model="ctrlColour">
+
+	    <shirt colour=" {{ctrlColour}} " size="medium"></shirt>     <!-- directive -->
+	 
+	  </div>
+	</div>
+
+
+    <script src="angular.min.js"></script>
+    <script>
+      angular.module('app', [])
+
+			.controller("MainCtrl", ['$scope', function ($scope) {
+			  $scope.ctrlColour = "lime";
+			}])
+
+			.directive("shirt", [function () {
+			  return {
+			    scope: {
+			      colour: "@",
+			      size: "@"
+			    },
+			    template: '<p> Colour: {{ colour }} </p>' +
+			    	'<p> Size: {{ size }} </p>'
+			    // NOTE: the need for a link function to do something 
+			    // like this is replaced by '@' completely
+
+			    // ,
+			    // link: function (scope, element, attrs) {
+			    //   scope.colour = attrs.colour;
+			    // } 
+			  };
+			}]);
+      
+    </script>
+  </body>
+
+</html>
